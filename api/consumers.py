@@ -79,5 +79,6 @@ class MyAsyncConsumer(AsyncConsumer):
 
     async def websocket_disconnect(self, event):
         print('websocket disconnect..',event)
+        async_to_sync (self.channel_layer.group_discard)(self.chat_channel_name,self.channel_name)
         raise StopConsumer()
  
