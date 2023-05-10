@@ -52,7 +52,7 @@ class MyAsyncConsumer(AsyncConsumer):
     async def websocket_connect(self, event):
         print('websocket connect..', event)
         chat_channel_name = self.scope['url_route']['kwargs']['channelname']
-        async_to_sync (self.channel_layer.group_add)(self.chat_channel_name,self.channel_name)
+         self.channel_layer.group_add(self.chat_channel_name,self.channel_name)
         await self.send({
             'type':'websocket.accept'
         })
@@ -60,7 +60,7 @@ class MyAsyncConsumer(AsyncConsumer):
     async def websocket_receive(self, event):
         print('websocket recieved..',event)
         print(event['text'])
-        async_to_sync (self.channel_layer.group_send)(
+         self.channel_layer.group_send(
             self.chat_channel_name,
             {
                 'type':'chat.message',
@@ -79,6 +79,6 @@ class MyAsyncConsumer(AsyncConsumer):
 
     async def websocket_disconnect(self, event):
         print('websocket disconnect..',event)
-        async_to_sync (self.channel_layer.group_discard)(self.chat_channel_name,self.channel_name)
+         self.channel_layer.group_discard(self.chat_channel_name,self.channel_name)
         raise StopConsumer()
  
